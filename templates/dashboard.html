@@ -1,0 +1,54 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html>
+
+<head>
+	<link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <title>Dashboard: {{ f_id }}</title>
+</head>
+
+<body>
+
+    <div><a style="float:right; margin-right: 40px" href="{% url 'logout' %}"> <button>Logout</button> </a></div>
+    {% if messages %}
+    <center>
+    <div style="max-width:550px;">
+        {% for message in messages %}
+        <div {% if message.tags == 'error' %} class="alert alert-danger" role="alert" {% else %} class="alert alert-success" {% endif %}>{{ message }}</div>
+        {% endfor %}
+    </div>
+    </center>
+    {% endif %}
+
+    <div class="form">
+        <div class="title-row">
+            <h1>Welcome {{ name }}!</h1>
+        </div>
+        <div class="row" style="font-size:20px">
+            <span>Email ID:</span>
+            <span style="width: 350px;">{{ email }}</span>
+        </div>
+        <div class="row" style="font-size:20px">
+            <span>Name:</span>
+            <span style="width: 350px;">{{ name }}</span>
+        </div>
+        <div class="row" style="font-size:20px">
+            <span>Mobile:</span>
+            <span style="width: 350px;">{{ mobile }}</span>
+        </div>
+        
+        <div class="row" style="font-size:20px">
+            <span>Address:</span>
+            <span style="width: 350px;">{{ address }}</span>
+        </div>
+    </div>
+    <center>
+        <!-- <a style="margin-right: 20px" href=""> <button>Update information</button> </a> -->
+        <a style="margin-right: 20px" href="{% url 'warehouse' %}"> <button>Present stock in warehouse</button> </a>
+        <a style="margin-right: 20px" href="{% url 'history' %}"> <button>Past buy/sell requests status</button> </a>
+        <!-- <a style="margin-right: 20px" href=""> <button>Leave Types</button> </a> -->
+    </center>
+
+</body>
+
+</html>

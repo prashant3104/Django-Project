@@ -1,0 +1,99 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html>
+
+<head>
+	<link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <title>Admin Dashboard</title>
+</head>
+
+<body>
+
+    <div><a style="float:right; margin-right: 40px" href="{% url 'logout' %}"> <button>Logout</button> </a></div>
+    {% if messages %}
+    <center>
+    <div style="max-width:550px;">
+        {% for message in messages %}
+        <div {% if message.tags == 'error' %} class="alert alert-danger" role="alert" {% else %} class="alert alert-success" {% endif %}>{{ message }}</div>
+        {% endfor %}
+    </div>
+    </center>
+    {% endif %}
+    <br><br>
+
+    <div class="form" style="max-width: 900px;">
+        
+    <!-- Table of vendor requests -->
+        <div class="title-row">
+            <h1>Vendor Requests</h1>
+        </div>
+        <center>
+        
+        <table>
+          <tr>
+            {% for column in columns %}
+                <th>{{ column }}</th>
+            {% endfor %}
+            
+          </tr>
+          {% for a in vendors %}
+
+          <tr>
+            
+            {% for b in a %}
+                {% if forloop.last %}
+                    <td>{% if b %} Processed {% else %} Declined {%endif%}</td>
+                {% else %}
+                    <td>{{ b }}</td>
+                
+                {% endif %}
+            {% endfor %}
+          </tr>
+          {% endfor %}
+        </table>
+        
+        </center>
+
+        <br><br><br><br>
+
+
+        <!-- Table of vendor requests -->
+        <div class="title-row">
+            <h1>Customer Requests</h1>
+        </div>
+        <center>
+        
+        <table>
+          <tr>
+            
+            {% for column in columns %}
+                <th>{{ column }}</th>
+            {% endfor %}
+            
+          </tr>
+          {% for a in customers %}
+
+          <tr>
+            
+            {% for b in a %}
+                {% if forloop.last %}
+                    <td>{% if b %} Processed {% else %} Declined {%endif%}</td>
+                {% else %}
+                    <td>{{ b }}</td>
+                
+                {% endif %}
+            {% endfor %}
+          </tr>
+          {% endfor %}
+        </table>
+        
+        </center>
+    </div>
+
+    <center>
+        <a style="margin-right: 20px" href="{% url 'admin_dashboard' %}"> <button>Back</button> </a>
+    </center>
+
+</body>
+
+</html>

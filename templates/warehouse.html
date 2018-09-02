@@ -1,0 +1,67 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html>
+
+<head>
+	<link rel="stylesheet" href="{% static 'css/style.css' %}">
+  <title>Warehouse</title>
+</head>
+
+<body>
+
+    {% if messages %}
+    <center>
+    <div style="max-width:550px;">
+        {% for message in messages %}
+        <div {% if message.tags == 'error' %} class="alert alert-danger" role="alert" {% else %} class="alert alert-success" {% endif %}>{{ message }}</div>
+        {% endfor %}
+    </div>
+    </center>
+    {% endif %}
+
+    <div class="form">
+        <div class="title-row">
+            <h1>Types of coals we deal in - </h1>
+        </div>
+        <center>
+        <table>
+          <tr>
+            <th>Coal Type</th>
+            <th>Current stock</th>
+            <th>Market price (per unit)</th>
+            <th>Action</th>
+            
+          </tr>
+          {% for a in data %}
+              <tr>
+                {% for b in a %}
+                    <td>{{ b }}</td>
+                {% endfor %}
+                <td>
+                {% if request.user.first_name != 'admin' %}
+                  <a href="{% url 'offer' %}?item={{ a.0 }}">
+                  {% if role == 'vendors' %}
+                    Submit a sell offer for {{ a.0 }}
+                  {% elif role == 'customers' %}
+                    Submit a buy offer
+                  
+                  {% endif %}
+                  </a>
+                {% else %}
+                  <a href="{% url 'edit' %}?item={{ a.0 }}">Edit</a>
+                {%endif%}  
+                </td>
+              </tr>
+          {% endfor %}
+        </table>
+        </center>
+        <br><br><br>
+
+    </div>
+    <center>
+        <a style="margin-right: 20px" href="{% url 'dashboard' %}"> <button>Back</button> </a>
+    </center>
+
+</body>
+
+</html>

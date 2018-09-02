@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+{% load staticfiles %}
+<html>
+
+<head>
+	<link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <title>Product Page</title>
+</head>
+
+<body>
+
+    <div><a style="float:right; margin-right: 40px" href="{% url 'logout' %}"> <button>Logout</button> </a></div>
+    {% if messages %}
+    <center>
+    <div style="max-width:550px;">
+        {% for message in messages %}
+        <div {% if message.tags == 'error' %} class="alert alert-danger" role="alert" {% else %} class="alert alert-success" {% endif %}>{{ message }}</div>
+        {% endfor %}
+    </div>
+    </center>
+    {% endif %}    
+    <div>
+
+        <form class="form" method="post" action="{% url 'edit' %}">
+            {% csrf_token %}
+            <div class="title-row">
+                <h1>Edit Coal </h1>
+            </div>
+
+            <div class="row">
+                <label>
+                    <span>Item: </span>
+                    <input type="text" name="item" value="{{data.0}}" readonly>
+                </label>
+            </div>
+
+            <div class="row">
+                <label>
+                    <span>Current market price: </span>
+                    <input type="number" name="price" min="0" step="10" value="{{data.2}}" {% if not request.user.first_name == 'admin'%}disabled{% endif %}>
+                </label>
+            </div>
+
+            {% if not request.user.first_name == 'admin'%}
+            <div class="row">
+                <label>
+                    <span>Your price: </span>
+                    <input type="number" name="offered_price" min="0" step="10" value="{{data.2}}" autofocus>
+                </label>
+            </div>
+            {% endif %}
+            <div class="row">
+                <label>
+                    <span>Quantity: </span>
+                    <input type="number" name="quantity" min="0" " step="1" value="{{data.1}}">
+                </label>
+            </div>
+
+
+            <div>
+                <button style="margin-right: 20px" type="submit">Submit</button>
+                <a class="alert" style="text-decoration: none" href="{% url 'warehouse' %}">Back</a>
+            </div>
+        </form>
+
+    </div>
+
+</body>
+
+</html>

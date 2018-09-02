@@ -1,0 +1,45 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html>
+
+<head>
+	<link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <title>Home Page</title>
+</head>
+
+<body>
+
+    {% if messages %}
+    <center>
+    <div style="max-width:550px;">
+        {% for message in messages %}
+        <div {% if message.tags == 'error' %} class="alert alert-danger" role="alert" {% else %} class="alert alert-success" {% endif %}>{{ message }}</div>
+        {% endfor %}
+    </div>
+    </center>
+    {% endif %}
+    
+    <div class="form" style="max-width: 900px;">
+
+        
+            <div class="title-row">
+                <h1>Bhaski Nath Gupta Coal Ltd.</h1>
+            </div>
+
+            <table width="100%">
+                <tr>
+                    <td style="{font-size: 18}">Existing Users</td>
+                    <td style="{font-size: 18}">New Users</td>
+                </tr>
+                <tr>
+                    <td><a href="{% url 'login' %}"> <button>Sign In</button> </a></td>
+                    <td><a href="{% url 'register' %}"> <button>Register</button> </a></td>
+                </tr>
+            </table>
+
+
+    </div>
+
+</body>
+
+</html>

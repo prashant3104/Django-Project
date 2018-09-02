@@ -1,0 +1,83 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html>
+
+<head>
+	<link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <title>Transactions History</title>
+</head>
+
+<body>
+
+    <div><a style="float:right; margin-right: 40px" href="{% url 'logout' %}"> <button>Logout</button> </a></div>
+    {% if messages %}
+    <center>
+    <div style="max-width:550px;">
+        {% for message in messages %}
+        <div {% if message.tags == 'error' %} class="alert alert-danger" role="alert" {% else %} class="alert alert-success" {% endif %}>{{ message }}</div>
+        {% endfor %}
+    </div>
+    </center>
+    {% endif %}
+    <br><br>
+
+    <div class="form" style="max-width: 900px;">
+        <div class="title-row">
+            <h1>Reviewed</h1>
+        </div>
+        <center>
+        <table>
+          <tr>
+            {% for column in columns %}
+                <th>{{ column }}</th>
+            {% endfor %}
+          </tr>
+          {% for a in checked %}
+              <tr>
+                {% for b in a %}
+                    <td>
+                        {% if not forloop.last %}
+                            {{ b }}
+                        {% else %}
+
+                            <b><i>{% if b == 0 %} Declined {% else %} Processed {%endif%}</i></b>
+                        {% endif %}
+                    </td>
+                {% endfor %}
+              </tr>
+          {% endfor %}
+        </table>
+        </center>
+        <br><br><br><br>
+        <div class="title-row">
+            <h1>Unreviewed</h1>
+        </div>
+        <center>
+        <table>
+          <tr>
+            {% for column in columns %}
+                {% if not forloop.last %}
+                <th>{{ column }}</th>
+                {% endif %}
+            {% endfor %}
+          </tr>
+          {% for a in pending %}
+              <tr>
+                {% for b in a %}
+                    {% if not forloop.last %}
+                        <td>{{ b }}</td>
+                    {% endif %}
+                {% endfor %}
+              </tr>
+          {% endfor %}
+        </table>
+        </center>
+    </div>
+
+    <center>
+        <a style="margin-right: 20px" href="{% url 'dashboard' %}"> <button>Back</button> </a>
+    </center>
+
+</body>
+
+</html>

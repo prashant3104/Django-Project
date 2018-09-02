@@ -1,0 +1,2 @@
+check the usage of STATICFILESDIR variable at the end of settings.py
+csrf_protect

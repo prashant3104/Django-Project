@@ -1,0 +1,109 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html>
+
+<head>
+	<link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <title>Register</title>
+</head>
+
+<body>
+
+    <!-- <div><a style="float:right; margin-right: 40px" href="{% url 'logout' %}"> <button>Logout</button> </a></div> -->
+    {% if messages %}
+    <center>
+    <div style="max-width:550px;">
+        {% for message in messages %}
+        <div {% if message.tags == 'error' %} class="alert alert-danger" role="alert" {% else %} class="alert alert-success" {% endif %}>{{ message }}</div>
+        {% endfor %}
+    </div>
+    </center>
+    {% endif %}
+    
+    <div>
+
+        <form class="form" method="post" action="{% url 'register' %}">
+            {% csrf_token %}
+            <div class="title-row">
+                <h1>Register with us</h1>
+            </div>
+
+            <div class="row">
+                <label>
+                    <span>Email ID</span>
+                    <input type="text" name="email" required>
+                </label>
+            </div>
+
+            <div class="row">
+                <label>
+                    <span>First Name</span>
+                    <input type="text" name="first_name" required>
+                </label>
+            </div>
+
+            <div class="row">
+                <label>
+                    <span>Middle Name</span>
+                    <input type="text" name="middle_name">
+                </label>
+            </div>
+
+            <div class="row">
+                <label>
+                    <span>Last Name</span>
+                    <input type="text" name="last_name">
+                </label>
+            </div>
+
+            <div class="row">
+                <label>
+                    <span>Mobile Number</span>
+                    <input type="text" name="mobile" required>
+                </label>
+            </div>
+
+            <div class="row">
+                <label>
+                    <span>Register as</span>
+                     <select name="role">
+                        <option value="vendors">Vendor</option>
+                        <option value="customers">Customer</option>
+                     </select>
+                </label>
+            </div>
+
+            <div class="row">
+                <label>
+                    <span>Address</span>
+                        <input type="text" name="address">
+                     </select>
+                </label>
+            </div>
+
+            <div class="row">
+                <label>
+                    <span>Password</span>
+                    <input type="password" name="pass1" required>
+                </label>
+            </div>
+
+            <div class="row">
+                <label>
+                    <span>Re-enter Password</span>
+                    <input type="password" name="pass2" required>
+                </label>
+            </div>
+
+            <div>
+                <button type="submit">Submit</button>
+                
+            </div>
+
+        </form>
+
+    </div>
+
+</body>
+
+</html>

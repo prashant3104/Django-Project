@@ -1,0 +1,139 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html>
+
+<head>
+	<link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <title>Admin Dashboard</title>
+</head>
+
+<body>
+
+    <div><a style="float:right; margin-right: 40px" href="{% url 'logout' %}"> <button>Logout</button> </a></div>
+    {% if messages %}
+    <center>
+    <div style="max-width:550px;">
+        {% for message in messages %}
+        <div {% if message.tags == 'error' %} class="alert alert-danger" role="alert" {% else %} class="alert alert-success" {% endif %}>{{ message }}</div>
+        {% endfor %}
+    </div>
+    </center>
+    {% endif %}
+    <br><br>
+
+    <div class="form" style="max-width: 900px;">
+        
+    <!-- Table of vendor requests -->
+        <div class="title-row">
+            <h1>Vendor Requests</h1>
+        </div>
+        <center>
+        <form method="GET" action="{% url 'update' %}">
+        <table>
+          <tr>
+            <th>Select</th>
+            {% for column in columns %}
+                {% if not forloop.last %}
+                <th>{{ column }}</th>
+                {% endif %}
+
+            {% endfor %}
+            <th>Profile</th>
+          </tr>
+          {% for a in vendors %}
+
+          <tr>
+            <td><input type="radio" name="tid" value="{{a.0}}"></td>
+            {% for b in a %}
+                {% if not forloop.last %}
+                    <td>{{ b }}</td>
+                {% endif %}
+            {% endfor %}
+            <td><a href="{% url 'profile' %}?email={{a.1}}&role=vendors">Show profile</a></td>
+          </tr>
+          {% endfor %}
+        </table>
+        <br><br>
+        <div class="row">
+            <label>
+                <span>Choose action</span>
+                 <select name="action">
+                    <option value="1">Approve</option>
+                    <option value="0">Decline</option>
+                 </select>
+            </label>
+        </div>
+
+        <div>
+            <input type="hidden" name="role" value="vendors">
+            <button type="submit">Submit</button>
+        </div>
+
+        </form>
+        </center>
+
+        <br><br>
+
+
+        <!-- Table of Customer requests -->
+        <div class="title-row">
+            <h1>Customer Requests</h1>
+        </div>
+        <center>
+        <form method="GET" action="{% url 'update' %}">
+        <table>
+          <tr>
+            <th>Select</th>
+            {% for column in columns %}
+                {% if not forloop.last %}
+                <th>{{ column }}</th>
+                {% endif %}
+            {% endfor %}
+            <th>Profile</th>>
+          </tr>
+          {% for a in customers %}
+
+          <tr>
+            <td><input type="radio" name="tid" value="{{a.0}}"></td>
+            {% for b in a %}
+                {% if not forloop.last %}
+                    <td>{{ b }}</td>
+                {% endif %}
+            {% endfor %}
+            <td><a href="{% url 'profile' %}?email={{a.1}}&role=customers">Show profile</a></td>
+          </tr>
+          {% endfor %}
+        </table>
+        <br>
+
+
+
+        <br>
+        <div class="row">
+            <label>
+                <span>Choose action</span>
+                 <select name="action">
+                    <option value="1">Approve</option>
+                    <option value="0">Decline</option>
+                 </select>
+            </label>
+        </div>
+
+        <div>
+            <input type="hidden" name="role" value="customers">
+            <button type="submit">Submit</button>
+        </div>
+
+        </form>
+        </center>
+    </div>
+
+    <center>
+        <a style="margin-right: 20px" href="{% url 'warehouse' %}"> <button>Warehouse</button> </a>
+        <a style="margin-right: 20px" href="{% url 'history' %}"> <button>History</button> </a>
+        <!-- <a style="margin-right: 20px" href=""> <button>Add another </button> </a> -->
+    </center>
+
+</body>
+
+</html>
